@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<definitions targetNamespace="urn:pbmService"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:interface="urn:pbm"
+>
+   <import location="pbm.wsdl" namespace="urn:pbm" />
+   <service name="PbmService">
+      <port binding="interface:PbmBinding" name="PbmPort">
+         <soap:address location="https://localhost/pbm/sdk" />
+      </port>
+   </service>
+</definitions>

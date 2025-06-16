@@ -1,0 +1,1568 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<schema
+   targetNamespace="urn:sms"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:sms="urn:sms"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:vim25="urn:vim25"
+   xmlns:reflect="urn:reflect"
+   elementFormDefault="qualified"
+>
+   <import namespace="urn:vim25" schemaLocation="core-types.xsd" />
+   <import namespace="urn:reflect" schemaLocation="reflect-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="query-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="vim-types.xsd" />
+   <complexType name="SmsAboutInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="name" type="xsd:string" />
+               <element name="fullName" type="xsd:string" />
+               <element name="vendor" type="xsd:string" />
+               <element name="apiVersion" type="xsd:string" />
+               <element name="instanceUuid" type="xsd:string" />
+               <element name="vasaApiVersion" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="EntityReference">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="xsd:string" />
+               <element name="type" type="sms:EntityReferenceEntityType" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="EntityReferenceEntityType">
+      <restriction base="xsd:string">
+         <enumeration value="datacenter" />
+         <enumeration value="resourcePool" />
+         <enumeration value="storagePod" />
+         <enumeration value="cluster" />
+         <enumeration value="vm" />
+         <enumeration value="datastore" />
+         <enumeration value="host" />
+         <enumeration value="vmFile" />
+         <enumeration value="scsiPath" />
+         <enumeration value="scsiTarget" />
+         <enumeration value="scsiVolume" />
+         <enumeration value="scsiAdapter" />
+         <enumeration value="nasMount" />
+      </restriction>
+   </simpleType>
+   <complexType name="FaultDomainFilter">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="providerId" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicationGroupFilter">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsTaskInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="key" type="xsd:string" />
+               <element name="task" type="vim25:ManagedObjectReference" />
+               <element name="object" type="vim25:ManagedObjectReference" minOccurs="0" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" />
+               <element name="result" type="xsd:anyType" minOccurs="0" />
+               <element name="startTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="completionTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="state" type="xsd:string" />
+               <element name="progress" type="xsd:int" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="SmsTaskState">
+      <restriction base="xsd:string">
+         <enumeration value="queued" />
+         <enumeration value="running" />
+         <enumeration value="success" />
+         <enumeration value="error" />
+      </restriction>
+   </simpleType>
+   <complexType name="AuthConnectionFailed">
+      <complexContent>
+         <extension base="vim25:NoPermission">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="CertificateAuthorityFault">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+               <element name="faultCode" type="xsd:int" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="CertificateNotImported">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="CertificateNotTrusted">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+               <element name="certificate" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="CertificateRefreshFailed">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+               <element name="providerId" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="CertificateRevocationFailed">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="DuplicateEntry">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InactiveProvider">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+               <element name="mapping" type="sms:FaultDomainProviderMapping" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="IncorrectUsernamePassword">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidCertificate">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+               <element name="certificate" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsInvalidLogin">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidProfile">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidSession">
+      <complexContent>
+         <extension base="vim25:NoPermission">
+            <sequence>
+               <element name="sessionCookie" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidUrl">
+      <complexContent>
+         <extension base="sms:ProviderRegistrationFault">
+            <sequence>
+               <element name="url" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="MultipleSortSpecsNotSupported">
+      <complexContent>
+         <extension base="vim25:InvalidArgument">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="NoCommonProviderForAllBackings">
+      <complexContent>
+         <extension base="sms:QueryExecutionFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="NotSupportedByProvider">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderBusy">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderConnectionFailed">
+      <complexContent>
+         <extension base="vim25:RuntimeFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderNotFound">
+      <complexContent>
+         <extension base="sms:QueryExecutionFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderOutOfProvisioningResource">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+               <element name="provisioningResourceId" type="xsd:string" />
+               <element name="availableBefore" type="xsd:long" minOccurs="0" />
+               <element name="availableAfter" type="xsd:long" minOccurs="0" />
+               <element name="total" type="xsd:long" minOccurs="0" />
+               <element name="isTransient" type="xsd:boolean" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderOutOfResource">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderRegistrationFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderSyncFailed">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderUnavailable">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProviderUnregistrationFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ProxyRegistrationFailed">
+      <complexContent>
+         <extension base="vim25:RuntimeFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="QueryExecutionFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="QueryNotSupported">
+      <complexContent>
+         <extension base="vim25:InvalidArgument">
+            <sequence>
+               <element name="entityType" type="sms:EntityReferenceEntityType" minOccurs="0" />
+               <element name="relatedEntityType" type="sms:EntityReferenceEntityType" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsResourceInUse">
+      <complexContent>
+         <extension base="vim25:ResourceInUse">
+            <sequence>
+               <element name="deviceIds" type="sms:DeviceId" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ServiceNotInitialized">
+      <complexContent>
+         <extension base="vim25:RuntimeFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SyncInProgress">
+      <complexContent>
+         <extension base="sms:ProviderSyncFailed">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="TooMany">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+               <element name="maxBatchSize" type="xsd:long" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="AlreadyDone">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidFunctionTarget">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="InvalidReplicationState">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+               <element name="desiredState" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="currentState" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="NoReplicationTarget">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="NoValidReplica">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+               <element name="deviceId" type="sms:DeviceId" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="PeerNotReachable">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsReplicationFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SyncOngoing">
+      <complexContent>
+         <extension base="sms:SmsReplicationFault">
+            <sequence>
+               <element name="task" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="AlarmFilter">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="alarmStatus" type="xsd:string" minOccurs="0" />
+               <element name="alarmType" type="xsd:string" minOccurs="0" />
+               <element name="entityType" type="xsd:string" minOccurs="0" />
+               <element name="entityId" type="xsd:anyType" minOccurs="0" maxOccurs="unbounded" />
+               <element name="pageMarker" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="AlarmResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="storageAlarm" type="sms:StorageAlarm" minOccurs="0" maxOccurs="unbounded" />
+               <element name="pageMarker" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SmsProviderInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uid" type="xsd:string" />
+               <element name="name" type="xsd:string" />
+               <element name="description" type="xsd:string" minOccurs="0" />
+               <element name="version" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfSmsProviderInfo">
+      <sequence>
+         <element name="SmsProviderInfo" type="sms:SmsProviderInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="SmsProviderSpec">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="name" type="xsd:string" />
+               <element name="description" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VASAProviderUpgradeSpec">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="providerUid" type="xsd:string" />
+               <element name="username" type="xsd:string" />
+               <element name="password" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VasaProviderInfo">
+      <complexContent>
+         <extension base="sms:SmsProviderInfo">
+            <sequence>
+               <element name="url" type="xsd:string" />
+               <element name="certificate" type="xsd:string" minOccurs="0" />
+               <element name="status" type="xsd:string" minOccurs="0" />
+               <element name="statusFault" type="vim25:LocalizedMethodFault" minOccurs="0" />
+               <element name="vasaVersion" type="xsd:string" minOccurs="0" />
+               <element name="namespace" type="xsd:string" minOccurs="0" />
+               <element name="lastSyncTime" type="xsd:string" minOccurs="0" />
+               <element name="supportedVendorModelMapping" type="sms:SupportedVendorModelMapping" minOccurs="0" maxOccurs="unbounded" />
+               <element name="supportedProfile" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="supportedProviderProfile" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="relatedStorageArray" type="sms:RelatedStorageArray" minOccurs="0" maxOccurs="unbounded" />
+               <element name="providerId" type="xsd:string" minOccurs="0" />
+               <element name="certificateExpiryDate" type="xsd:string" minOccurs="0" />
+               <element name="certificateStatus" type="xsd:string" minOccurs="0" />
+               <element name="serviceLocation" type="xsd:string" minOccurs="0" />
+               <element name="needsExplicitActivation" type="xsd:boolean" minOccurs="0" />
+               <element name="maxBatchSize" type="xsd:long" minOccurs="0" />
+               <element name="retainVasaProviderCertificate" type="xsd:boolean" minOccurs="0" />
+               <element name="arrayIndependentProvider" type="xsd:boolean" minOccurs="0" />
+               <element name="type" type="xsd:string" minOccurs="0" />
+               <element name="category" type="xsd:string" minOccurs="0" />
+               <element name="priority" type="xsd:int" minOccurs="0" />
+               <element name="failoverGroupId" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="VasaProviderCertificateStatus">
+      <restriction base="xsd:string">
+         <enumeration value="valid" />
+         <enumeration value="expirySoftLimitReached" />
+         <enumeration value="expiryHardLimitReached" />
+         <enumeration value="expired" />
+         <enumeration value="invalid" />
+      </restriction>
+   </simpleType>
+   <complexType name="RelatedStorageArray">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="arrayId" type="xsd:string" />
+               <element name="active" type="xsd:boolean" />
+               <element name="manageable" type="xsd:boolean" />
+               <element name="priority" type="xsd:int" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfRelatedStorageArray">
+      <sequence>
+         <element name="RelatedStorageArray" type="sms:RelatedStorageArray" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="SupportedVendorModelMapping">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="vendorId" type="xsd:string" minOccurs="0" />
+               <element name="modelId" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfSupportedVendorModelMapping">
+      <sequence>
+         <element name="SupportedVendorModelMapping" type="sms:SupportedVendorModelMapping" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="VasaProviderStatus">
+      <restriction base="xsd:string">
+         <enumeration value="online" />
+         <enumeration value="offline" />
+         <enumeration value="syncError" />
+         <enumeration value="unknown" />
+         <enumeration value="connected" />
+         <enumeration value="disconnected" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VasaProviderProfile">
+      <restriction base="xsd:string">
+         <enumeration value="blockDevice" />
+         <enumeration value="fileSystem" />
+         <enumeration value="capability" />
+      </restriction>
+   </simpleType>
+   <simpleType name="ProviderProfile">
+      <restriction base="xsd:string">
+         <enumeration value="ProfileBasedManagement" />
+         <enumeration value="Replication" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VpType">
+      <restriction base="xsd:string">
+         <enumeration value="PERSISTENCE" />
+         <enumeration value="DATASERVICE" />
+         <enumeration value="UNKNOWN" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VpCategory">
+      <restriction base="xsd:string">
+         <enumeration value="internal" />
+         <enumeration value="external" />
+      </restriction>
+   </simpleType>
+   <complexType name="VasaProviderSpec">
+      <complexContent>
+         <extension base="sms:SmsProviderSpec">
+            <sequence>
+               <element name="username" type="xsd:string" />
+               <element name="password" type="xsd:string" />
+               <element name="url" type="xsd:string" />
+               <element name="certificate" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="VasaAuthenticationType">
+      <restriction base="xsd:string">
+         <enumeration value="LoginByToken" />
+         <enumeration value="UseSessionId" />
+      </restriction>
+   </simpleType>
+   <simpleType name="SmsAlarmStatus">
+      <restriction base="xsd:string">
+         <enumeration value="Red" />
+         <enumeration value="Green" />
+         <enumeration value="Yellow" />
+      </restriction>
+   </simpleType>
+   <simpleType name="AlarmType">
+      <restriction base="xsd:string">
+         <enumeration value="SpaceCapacityAlarm" />
+         <enumeration value="CapabilityAlarm" />
+         <enumeration value="StorageObjectAlarm" />
+         <enumeration value="ObjectAlarm" />
+         <enumeration value="ComplianceAlarm" />
+         <enumeration value="ManageabilityAlarm" />
+         <enumeration value="ReplicationAlarm" />
+         <enumeration value="CertificateAlarm" />
+      </restriction>
+   </simpleType>
+   <complexType name="BackingConfig">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="thinProvisionBackingIdentifier" type="xsd:string" minOccurs="0" />
+               <element name="deduplicationBackingIdentifier" type="xsd:string" minOccurs="0" />
+               <element name="autoTieringEnabled" type="xsd:boolean" minOccurs="0" />
+               <element name="deduplicationEfficiency" type="xsd:long" minOccurs="0" />
+               <element name="performanceOptimizationInterval" type="xsd:long" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="BackingStoragePool">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="type" type="xsd:string" />
+               <element name="capacityInMB" type="xsd:long" />
+               <element name="usedSpaceInMB" type="xsd:long" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfBackingStoragePool">
+      <sequence>
+         <element name="BackingStoragePool" type="sms:BackingStoragePool" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="BackingStoragePoolType">
+      <restriction base="xsd:string">
+         <enumeration value="thinProvisioningPool" />
+         <enumeration value="deduplicationPool" />
+         <enumeration value="thinAndDeduplicationCombinedPool" />
+      </restriction>
+   </simpleType>
+   <complexType name="DatastoreBackingPoolMapping">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="datastore" type="vim25:ManagedObjectReference" maxOccurs="unbounded" />
+               <element name="backingStoragePool" type="sms:BackingStoragePool" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfDatastoreBackingPoolMapping">
+      <sequence>
+         <element name="DatastoreBackingPoolMapping" type="sms:DatastoreBackingPoolMapping" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="DatastorePair">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="datastore1" type="vim25:ManagedObjectReference" />
+               <element name="datastore2" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfDatastorePair">
+      <sequence>
+         <element name="DatastorePair" type="sms:DatastorePair" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="DrsMigrationCapabilityResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="recommendedDatastorePair" type="sms:DatastorePair" minOccurs="0" maxOccurs="unbounded" />
+               <element name="nonRecommendedDatastorePair" type="sms:DatastorePair" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="SmsEntityType">
+      <restriction base="xsd:string">
+         <enumeration value="StorageArrayEntity" />
+         <enumeration value="StorageProcessorEntity" />
+         <enumeration value="StoragePortEntity" />
+         <enumeration value="StorageLunEntity" />
+         <enumeration value="StorageFileSystemEntity" />
+         <enumeration value="StorageCapabilityEntity" />
+         <enumeration value="CapabilitySchemaEntity" />
+         <enumeration value="CapabilityProfileEntity" />
+         <enumeration value="DefaultProfileEntity" />
+         <enumeration value="ResourceAssociationEntity" />
+         <enumeration value="StorageContainerEntity" />
+         <enumeration value="StorageObjectEntity" />
+         <enumeration value="MessageCatalogEntity" />
+         <enumeration value="ProtocolEndpointEntity" />
+         <enumeration value="VirtualVolumeInfoEntity" />
+         <enumeration value="BackingStoragePoolEntity" />
+         <enumeration value="FaultDomainEntity" />
+         <enumeration value="ReplicationGroupEntity" />
+      </restriction>
+   </simpleType>
+   <complexType name="FaultDomainProviderMapping">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="activeProvider" type="vim25:ManagedObjectReference" />
+               <element name="faultDomainId" type="vim25:FaultDomainId" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfFaultDomainProviderMapping">
+      <sequence>
+         <element name="FaultDomainProviderMapping" type="sms:FaultDomainProviderMapping" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="FcStoragePort">
+      <complexContent>
+         <extension base="sms:StoragePort">
+            <sequence>
+               <element name="portWwn" type="xsd:string" />
+               <element name="nodeWwn" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="FcoeStoragePort">
+      <complexContent>
+         <extension base="sms:StoragePort">
+            <sequence>
+               <element name="portWwn" type="xsd:string" />
+               <element name="nodeWwn" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="StorageFileSystemInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="fileServerName" type="xsd:string" />
+               <element name="fileSystemPath" type="xsd:string" />
+               <element name="ipAddress" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageFileSystemInfo">
+      <sequence>
+         <element name="StorageFileSystemInfo" type="sms:StorageFileSystemInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="IscsiStoragePort">
+      <complexContent>
+         <extension base="sms:StoragePort">
+            <sequence>
+               <element name="identifier" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="LunHbaAssociation">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="canonicalName" type="xsd:string" />
+               <element name="hba" type="vim25:HostHostBusAdapter" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="NameValuePair">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="parameterName" type="xsd:string" />
+               <element name="parameterValue" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfNameValuePair">
+      <sequence>
+         <element name="NameValuePair" type="sms:NameValuePair" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="StorageAlarm">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="alarmId" type="xsd:long" />
+               <element name="alarmType" type="xsd:string" />
+               <element name="containerId" type="xsd:string" minOccurs="0" />
+               <element name="objectId" type="xsd:string" minOccurs="0" />
+               <element name="objectType" type="xsd:string" />
+               <element name="status" type="xsd:string" />
+               <element name="alarmTimeStamp" type="xsd:dateTime" />
+               <element name="messageId" type="xsd:string" />
+               <element name="parameterList" type="sms:NameValuePair" minOccurs="0" maxOccurs="unbounded" />
+               <element name="alarmObject" type="xsd:anyType" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageAlarm">
+      <sequence>
+         <element name="StorageAlarm" type="sms:StorageAlarm" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="StorageArray">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="name" type="xsd:string" />
+               <element name="uuid" type="xsd:string" />
+               <element name="vendorId" type="xsd:string" />
+               <element name="modelId" type="xsd:string" />
+               <element name="firmware" type="xsd:string" minOccurs="0" />
+               <element name="alternateName" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="supportedBlockInterface" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="supportedFileSystemInterface" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="supportedProfile" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="priority" type="xsd:int" minOccurs="0" />
+               <element name="discoverySvc" type="vim25:VASAStorageArrayDiscoverySvcInfo" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageArray">
+      <sequence>
+         <element name="StorageArray" type="sms:StorageArray" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="BlockDeviceInterface">
+      <restriction base="xsd:string">
+         <enumeration value="fc" />
+         <enumeration value="iscsi" />
+         <enumeration value="fcoe" />
+         <enumeration value="otherBlock" />
+      </restriction>
+   </simpleType>
+   <simpleType name="FileSystemInterface">
+      <restriction base="xsd:string">
+         <enumeration value="nfs" />
+         <enumeration value="otherFileSystem" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VasaProfile">
+      <restriction base="xsd:string">
+         <enumeration value="blockDevice" />
+         <enumeration value="fileSystem" />
+         <enumeration value="capability" />
+         <enumeration value="policy" />
+         <enumeration value="object" />
+         <enumeration value="statistics" />
+         <enumeration value="storageDrsBlockDevice" />
+         <enumeration value="storageDrsFileSystem" />
+      </restriction>
+   </simpleType>
+   <complexType name="StorageCapability">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="name" type="xsd:string" />
+               <element name="description" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="StorageContainer">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="name" type="xsd:string" />
+               <element name="maxVvolSizeInMB" type="xsd:long" />
+               <element name="providerId" type="xsd:string" maxOccurs="unbounded" />
+               <element name="arrayId" type="xsd:string" maxOccurs="unbounded" />
+               <element name="vvolContainerType" type="xsd:string" minOccurs="0" />
+               <element name="stretched" type="xsd:boolean" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageContainer">
+      <sequence>
+         <element name="StorageContainer" type="sms:StorageContainer" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="StorageContainerVvolContainerTypeEnum">
+      <restriction base="xsd:string">
+         <enumeration value="NFS" />
+         <enumeration value="NFS4x" />
+         <enumeration value="SCSI" />
+         <enumeration value="NVMe" />
+      </restriction>
+   </simpleType>
+   <complexType name="StorageContainerResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="storageContainer" type="sms:StorageContainer" minOccurs="0" maxOccurs="unbounded" />
+               <element name="providerInfo" type="sms:SmsProviderInfo" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="StorageContainerSpec">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="containerId" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="StorageFileSystem">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="info" type="sms:StorageFileSystemInfo" maxOccurs="unbounded" />
+               <element name="nativeSnapshotSupported" type="xsd:boolean" />
+               <element name="thinProvisioningStatus" type="xsd:string" />
+               <element name="type" type="xsd:string" />
+               <element name="version" type="xsd:string" />
+               <element name="backingConfig" type="sms:BackingConfig" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageFileSystem">
+      <sequence>
+         <element name="StorageFileSystem" type="sms:StorageFileSystem" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="FileSystemInterfaceVersion">
+      <restriction base="xsd:string">
+         <enumeration value="NFSV3_0" />
+      </restriction>
+   </simpleType>
+   <complexType name="StorageLun">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="vSphereLunIdentifier" type="xsd:string" />
+               <element name="vendorDisplayName" type="xsd:string" />
+               <element name="capacityInMB" type="xsd:long" />
+               <element name="usedSpaceInMB" type="xsd:long" />
+               <element name="lunThinProvisioned" type="xsd:boolean" />
+               <element name="alternateIdentifier" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="drsManagementPermitted" type="xsd:boolean" />
+               <element name="thinProvisioningStatus" type="xsd:string" />
+               <element name="backingConfig" type="sms:BackingConfig" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageLun">
+      <sequence>
+         <element name="StorageLun" type="sms:StorageLun" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="StoragePort">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="type" type="xsd:string" />
+               <element name="alternateName" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStoragePort">
+      <sequence>
+         <element name="StoragePort" type="sms:StoragePort" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="StorageProcessor">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="uuid" type="xsd:string" />
+               <element name="alternateIdentifer" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfStorageProcessor">
+      <sequence>
+         <element name="StorageProcessor" type="sms:StorageProcessor" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="ThinProvisioningStatus">
+      <restriction base="xsd:string">
+         <enumeration value="RED" />
+         <enumeration value="YELLOW" />
+         <enumeration value="GREEN" />
+      </restriction>
+   </simpleType>
+   <complexType name="DeviceId">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfDeviceId">
+      <sequence>
+         <element name="DeviceId" type="sms:DeviceId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="FailoverParam">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="isPlanned" type="xsd:boolean" />
+               <element name="checkOnly" type="xsd:boolean" />
+               <element name="replicationGroupsToFailover" type="sms:ReplicationGroupData" minOccurs="0" maxOccurs="unbounded" />
+               <element name="policyAssociations" type="sms:PolicyAssociation" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicationGroupData">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="groupId" type="vim25:ReplicationGroupId" />
+               <element name="pitId" type="sms:PointInTimeReplicaId" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfReplicationGroupData">
+      <sequence>
+         <element name="ReplicationGroupData" type="sms:ReplicationGroupData" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="PolicyAssociation">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="sms:DeviceId" />
+               <element name="policyId" type="xsd:string" />
+               <element name="datastore" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfPolicyAssociation">
+      <sequence>
+         <element name="PolicyAssociation" type="sms:PolicyAssociation" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="FailoverSuccessResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="newState" type="xsd:string" />
+               <element name="pitId" type="sms:PointInTimeReplicaId" minOccurs="0" />
+               <element name="pitIdBeforeFailover" type="sms:PointInTimeReplicaId" minOccurs="0" />
+               <element name="recoveredDeviceInfo" type="sms:RecoveredDevice" minOccurs="0" maxOccurs="unbounded" />
+               <element name="timeStamp" type="xsd:dateTime" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="RecoveredDiskInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="deviceKey" type="xsd:int" />
+               <element name="dsUrl" type="xsd:string" />
+               <element name="diskPath" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfRecoveredDiskInfo">
+      <sequence>
+         <element name="RecoveredDiskInfo" type="sms:RecoveredDiskInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="RecoveredDevice">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="targetDeviceId" type="sms:ReplicaId" minOccurs="0" />
+               <element name="recoveredDeviceId" type="sms:DeviceId" minOccurs="0" />
+               <element name="sourceDeviceId" type="sms:DeviceId" />
+               <element name="info" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="datastore" type="vim25:ManagedObjectReference" />
+               <element name="recoveredDiskInfo" type="sms:RecoveredDiskInfo" minOccurs="0" maxOccurs="unbounded" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" />
+               <element name="warnings" type="vim25:LocalizedMethodFault" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfRecoveredDevice">
+      <sequence>
+         <element name="RecoveredDevice" type="sms:RecoveredDevice" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="FaultDomainInfo">
+      <complexContent>
+         <extension base="vim25:FaultDomainId">
+            <sequence>
+               <element name="name" type="xsd:string" minOccurs="0" />
+               <element name="description" type="xsd:string" minOccurs="0" />
+               <element name="storageArrayId" type="xsd:string" minOccurs="0" />
+               <element name="children" type="vim25:FaultDomainId" minOccurs="0" maxOccurs="unbounded" />
+               <element name="provider" type="vim25:ManagedObjectReference" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="GroupErrorResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="error" type="vim25:LocalizedMethodFault" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="GroupInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="groupId" type="vim25:ReplicationGroupId" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="GroupOperationResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="groupId" type="vim25:ReplicationGroupId" />
+               <element name="warning" type="vim25:LocalizedMethodFault" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfGroupOperationResult">
+      <sequence>
+         <element name="GroupOperationResult" type="sms:GroupOperationResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="PointInTimeReplicaId">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="PromoteParam">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="isPlanned" type="xsd:boolean" />
+               <element name="replicationGroupsToPromote" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="QueryPointInTimeReplicaParam">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="replicaTimeQueryParam" type="sms:ReplicaQueryIntervalParam" minOccurs="0" />
+               <element name="pitName" type="xsd:string" minOccurs="0" />
+               <element name="tags" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+               <element name="preferDetails" type="xsd:boolean" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicaQueryIntervalParam">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="fromDate" type="xsd:dateTime" minOccurs="0" />
+               <element name="toDate" type="xsd:dateTime" minOccurs="0" />
+               <element name="number" type="xsd:int" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="QueryPointInTimeReplicaSuccessResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="replicaInfo" type="sms:PointInTimeReplicaInfo" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="PointInTimeReplicaInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="sms:PointInTimeReplicaId" />
+               <element name="pitName" type="xsd:string" />
+               <element name="timeStamp" type="xsd:dateTime" />
+               <element name="tags" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfPointInTimeReplicaInfo">
+      <sequence>
+         <element name="PointInTimeReplicaInfo" type="sms:PointInTimeReplicaInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryPointInTimeReplicaSummaryResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="intervalResults" type="sms:ReplicaIntervalQueryResult" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicaIntervalQueryResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="fromDate" type="xsd:dateTime" />
+               <element name="toDate" type="xsd:dateTime" />
+               <element name="number" type="xsd:int" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfReplicaIntervalQueryResult">
+      <sequence>
+         <element name="ReplicaIntervalQueryResult" type="sms:ReplicaIntervalQueryResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryReplicationGroupSuccessResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="rgInfo" type="sms:GroupInfo" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="QueryReplicationPeerResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="sourceDomain" type="vim25:FaultDomainId" />
+               <element name="targetDomain" type="vim25:FaultDomainId" minOccurs="0" maxOccurs="unbounded" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" maxOccurs="unbounded" />
+               <element name="warning" type="vim25:LocalizedMethodFault" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfQueryReplicationPeerResult">
+      <sequence>
+         <element name="QueryReplicationPeerResult" type="sms:QueryReplicationPeerResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="RecoveredTargetGroupMemberInfo">
+      <complexContent>
+         <extension base="sms:TargetGroupMemberInfo">
+            <sequence>
+               <element name="recoveredDeviceId" type="sms:DeviceId" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicaId">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="ReplicationReplicationState">
+      <restriction base="xsd:string">
+         <enumeration value="SOURCE" />
+         <enumeration value="TARGET" />
+         <enumeration value="FAILEDOVER" />
+         <enumeration value="INTEST" />
+         <enumeration value="REMOTE_FAILEDOVER" />
+      </restriction>
+   </simpleType>
+   <complexType name="ReverseReplicationSuccessResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="newGroupId" type="vim25:DeviceGroupId" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="SourceGroupInfo">
+      <complexContent>
+         <extension base="sms:GroupInfo">
+            <sequence>
+               <element name="name" type="xsd:string" minOccurs="0" />
+               <element name="description" type="xsd:string" minOccurs="0" />
+               <element name="state" type="xsd:string" />
+               <element name="replica" type="sms:ReplicationTargetInfo" minOccurs="0" maxOccurs="unbounded" />
+               <element name="memberInfo" type="sms:SourceGroupMemberInfo" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ReplicationTargetInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="targetGroupId" type="vim25:ReplicationGroupId" />
+               <element name="replicationAgreementDescription" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfReplicationTargetInfo">
+      <sequence>
+         <element name="ReplicationTargetInfo" type="sms:ReplicationTargetInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="SourceGroupMemberInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="deviceId" type="sms:DeviceId" />
+               <element name="targetId" type="sms:TargetDeviceId" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfSourceGroupMemberInfo">
+      <sequence>
+         <element name="SourceGroupMemberInfo" type="sms:SourceGroupMemberInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="TargetDeviceId">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="domainId" type="vim25:FaultDomainId" />
+               <element name="deviceId" type="sms:ReplicaId" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfTargetDeviceId">
+      <sequence>
+         <element name="TargetDeviceId" type="sms:TargetDeviceId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="SyncReplicationGroupSuccessResult">
+      <complexContent>
+         <extension base="sms:GroupOperationResult">
+            <sequence>
+               <element name="timeStamp" type="xsd:dateTime" />
+               <element name="pitId" type="sms:PointInTimeReplicaId" minOccurs="0" />
+               <element name="pitName" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="TargetGroupInfo">
+      <complexContent>
+         <extension base="sms:GroupInfo">
+            <sequence>
+               <element name="sourceInfo" type="sms:TargetToSourceInfo" />
+               <element name="state" type="xsd:string" />
+               <element name="devices" type="sms:TargetGroupMemberInfo" minOccurs="0" maxOccurs="unbounded" />
+               <element name="isPromoteCapable" type="xsd:boolean" minOccurs="0" />
+               <element name="name" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="TargetToSourceInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="sourceGroupId" type="vim25:ReplicationGroupId" />
+               <element name="replicationAgreementDescription" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="TargetGroupMemberInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="replicaId" type="sms:ReplicaId" />
+               <element name="sourceId" type="sms:DeviceId" />
+               <element name="targetDatastore" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfTargetGroupMemberInfo">
+      <sequence>
+         <element name="TargetGroupMemberInfo" type="sms:TargetGroupMemberInfo" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="TestFailoverParam">
+      <complexContent>
+         <extension base="sms:FailoverParam">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VVolId">
+      <complexContent>
+         <extension base="sms:DeviceId">
+            <sequence>
+               <element name="id" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VasaVirtualDiskId">
+      <complexContent>
+         <extension base="sms:DeviceId">
+            <sequence>
+               <element name="diskId" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualDiskKey">
+      <complexContent>
+         <extension base="sms:DeviceId">
+            <sequence>
+               <element name="vmInstanceUUID" type="xsd:string" />
+               <element name="deviceKey" type="xsd:int" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualDiskMoId">
+      <complexContent>
+         <extension base="sms:DeviceId">
+            <sequence>
+               <element name="vcUuid" type="xsd:string" minOccurs="0" />
+               <element name="vmMoid" type="xsd:string" />
+               <element name="diskKey" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualMachineFilePath">
+      <complexContent>
+         <extension base="sms:VirtualMachineId">
+            <sequence>
+               <element name="vcUuid" type="xsd:string" minOccurs="0" />
+               <element name="dsUrl" type="xsd:string" />
+               <element name="vmxPath" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualMachineId">
+      <complexContent>
+         <extension base="sms:DeviceId">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualMachineMoId">
+      <complexContent>
+         <extension base="sms:VirtualMachineId">
+            <sequence>
+               <element name="vcUuid" type="xsd:string" minOccurs="0" />
+               <element name="vmMoid" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VirtualMachineUUID">
+      <complexContent>
+         <extension base="sms:VirtualMachineId">
+            <sequence>
+               <element name="vmInstanceUUID" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+</schema>

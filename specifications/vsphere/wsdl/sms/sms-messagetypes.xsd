@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<schema
+   targetNamespace="urn:sms"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:sms="urn:sms"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:vim25="urn:vim25"
+   xmlns:reflect="urn:reflect"
+   elementFormDefault="qualified"
+>
+   <import namespace="urn:vim25" schemaLocation="core-types.xsd" />
+   <import namespace="urn:reflect" schemaLocation="reflect-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="query-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="vim-types.xsd" />
+   <include schemaLocation="sms-types.xsd" />
+   <complexType name="QueryStorageManagerRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QuerySessionManagerRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryAboutInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="RegisterProviderRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="providerSpec" type="sms:SmsProviderSpec" />
+      </sequence>
+   </complexType>
+   <complexType name="UnregisterProviderRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="providerId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryProviderRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryArrayRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="providerId" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryProcessorAssociatedWithArrayRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryPortAssociatedWithArrayRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryPortAssociatedWithLunRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="scsi3Id" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryLunAssociatedWithPortRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="portId" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryArrayAssociatedWithLunRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="canonicalName" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryPortAssociatedWithProcessorRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="processorId" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryLunAssociatedWithArrayRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryFileSystemAssociatedWithArrayRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryDatastoreCapabilityRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryHostAssociatedWithLunRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="scsi3Id" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryVmfsDatastoreAssociatedWithLunRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="scsi3Id" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryNfsDatastoreAssociatedWithFileSystemRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="fileSystemId" type="xsd:string" />
+         <element name="arrayId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryDrsMigrationCapabilityForPerformanceRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="srcDatastore" type="vim25:ManagedObjectReference" />
+         <element name="dstDatastore" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryDrsMigrationCapabilityForPerformanceExRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryStorageContainerRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="containerSpec" type="sms:StorageContainerSpec" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryAssociatedBackingStoragePoolRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="entityId" type="xsd:string" minOccurs="0" />
+         <element name="entityType" type="xsd:string" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryDatastoreBackingPoolMappingRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="SmsRefreshCACertificatesAndCRLsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="providerId" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryFaultDomainRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="filter" type="sms:FaultDomainFilter" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryReplicationGroupInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="rgFilter" type="sms:ReplicationGroupFilter" />
+      </sequence>
+   </complexType>
+   <complexType name="UpgradeVASAProviderRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="upgradeSpec" type="sms:VASAProviderUpgradeSpec" />
+      </sequence>
+   </complexType>
+   <complexType name="QuerySmsTaskResultRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QuerySmsTaskInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryProviderInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VasaProviderSyncRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="arrayId" type="xsd:string" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VasaProviderRefreshCertificateRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VasaProviderRevokeCertificateRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VasaProviderReconnectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryReplicationPeerRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="faultDomainId" type="vim25:FaultDomainId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryReplicationGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryPointInTimeReplicaRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+         <element name="queryParam" type="sms:QueryPointInTimeReplicaParam" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="TestFailoverReplicationGroupStartRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="testFailoverParam" type="sms:TestFailoverParam" />
+      </sequence>
+   </complexType>
+   <complexType name="TestFailoverReplicationGroupStopRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+         <element name="force" type="xsd:boolean" />
+      </sequence>
+   </complexType>
+   <complexType name="PromoteReplicationGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="promoteParam" type="sms:PromoteParam" />
+      </sequence>
+   </complexType>
+   <complexType name="SyncReplicationGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+         <element name="pitName" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="PrepareFailoverReplicationGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="FailoverReplicationGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="failoverParam" type="sms:FailoverParam" />
+      </sequence>
+   </complexType>
+   <complexType name="ReverseReplicateGroupRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="groupId" type="vim25:ReplicationGroupId" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="QueryActiveAlarmRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="alarmFilter" type="sms:AlarmFilter" minOccurs="0" />
+      </sequence>
+   </complexType>
+</schema>

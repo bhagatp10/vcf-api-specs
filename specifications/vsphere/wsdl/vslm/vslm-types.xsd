@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<schema
+   targetNamespace="urn:vslm"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:vslm="urn:vslm"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:vim25="urn:vim25"
+   xmlns:reflect="urn:reflect"
+   elementFormDefault="qualified"
+>
+   <import namespace="urn:vim25" schemaLocation="core-types.xsd" />
+   <import namespace="urn:reflect" schemaLocation="reflect-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="query-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="vim-types.xsd" />
+   <complexType name="VslmAboutInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="name" type="xsd:string" />
+               <element name="fullName" type="xsd:string" />
+               <element name="vendor" type="xsd:string" />
+               <element name="apiVersion" type="xsd:string" />
+               <element name="instanceUuid" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmQueryDatastoreInfoResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="datacenter" type="vim25:ManagedObjectReference" />
+               <element name="datastore" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmQueryDatastoreInfoResult">
+      <sequence>
+         <element name="VslmQueryDatastoreInfoResult" type="vslm:VslmQueryDatastoreInfoResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmServiceInstanceContent">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="aboutInfo" type="vslm:VslmAboutInfo" />
+               <element name="sessionManager" type="vim25:ManagedObjectReference" />
+               <element name="vStorageObjectManager" type="vim25:ManagedObjectReference" />
+               <element name="storageLifecycleManager" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmTaskInfo">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="key" type="xsd:string" />
+               <element name="task" type="vim25:ManagedObjectReference" />
+               <element name="description" type="vim25:LocalizableMessage" minOccurs="0" />
+               <element name="name" type="xsd:string" minOccurs="0" />
+               <element name="descriptionId" type="xsd:string" />
+               <element name="entity" type="vim25:ManagedObjectReference" minOccurs="0" />
+               <element name="entityName" type="xsd:string" minOccurs="0" />
+               <element name="locked" type="vim25:ManagedObjectReference" minOccurs="0" maxOccurs="unbounded" />
+               <element name="state" type="vslm:VslmTaskInfoState" />
+               <element name="cancelled" type="xsd:boolean" />
+               <element name="cancelable" type="xsd:boolean" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" />
+               <element name="result" type="xsd:anyType" minOccurs="0" />
+               <element name="progress" type="xsd:int" minOccurs="0" />
+               <element name="reason" type="vslm:VslmTaskReason" />
+               <element name="queueTime" type="xsd:dateTime" />
+               <element name="startTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="completeTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="eventChainId" type="xsd:int" />
+               <element name="changeTag" type="xsd:string" minOccurs="0" />
+               <element name="parentTaskKey" type="xsd:string" minOccurs="0" />
+               <element name="rootTaskKey" type="xsd:string" minOccurs="0" />
+               <element name="activationId" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="VslmTaskInfoState">
+      <restriction base="xsd:string">
+         <enumeration value="queued" />
+         <enumeration value="running" />
+         <enumeration value="success" />
+         <enumeration value="error" />
+      </restriction>
+   </simpleType>
+   <complexType name="VslmTaskReason">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmTaskReasonSystem">
+      <complexContent>
+         <extension base="vslm:VslmTaskReason">
+            <sequence>
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmTaskReasonUser">
+      <complexContent>
+         <extension base="vslm:VslmTaskReason">
+            <sequence>
+               <element name="userName" type="xsd:string" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmTaskReasonAlarm">
+      <complexContent>
+         <extension base="vslm:VslmTaskReason">
+            <sequence>
+               <element name="alarmName" type="xsd:string" />
+               <element name="alarm" type="vim25:ManagedObjectReference" />
+               <element name="entityName" type="xsd:string" />
+               <element name="entity" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmTaskReasonSchedule">
+      <complexContent>
+         <extension base="vslm:VslmTaskReason">
+            <sequence>
+               <element name="name" type="xsd:string" />
+               <element name="scheduledTask" type="vim25:ManagedObjectReference" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <simpleType name="VslmEventType">
+      <restriction base="xsd:string">
+         <enumeration value="preFcdMigrateEvent" />
+         <enumeration value="postFcdMigrateEvent" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VslmEventVslmEventInfoState">
+      <restriction base="xsd:string">
+         <enumeration value="success" />
+         <enumeration value="error" />
+      </restriction>
+   </simpleType>
+   <complexType name="VslmSyncFault">
+      <complexContent>
+         <extension base="vslm:VslmFault">
+            <sequence>
+               <element name="id" type="vim25:ID" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmFault">
+      <complexContent>
+         <extension base="vim25:MethodFault">
+            <sequence>
+               <element name="msg" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmDatastoreSyncStatus">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="datastoreURL" type="xsd:string" />
+               <element name="objectVClock" type="xsd:long" />
+               <element name="syncVClock" type="xsd:long" />
+               <element name="syncTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="numberOfRetries" type="xsd:int" minOccurs="0" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmDatastoreSyncStatus">
+      <sequence>
+         <element name="VslmDatastoreSyncStatus" type="vslm:VslmDatastoreSyncStatus" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmVsoVStorageObjectAssociations">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="vim25:ID" />
+               <element name="vmDiskAssociation" type="vslm:VslmVsoVStorageObjectAssociationsVmDiskAssociation" minOccurs="0" maxOccurs="unbounded" />
+               <element name="fault" type="vim25:LocalizedMethodFault" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmVsoVStorageObjectAssociations">
+      <sequence>
+         <element name="VslmVsoVStorageObjectAssociations" type="vslm:VslmVsoVStorageObjectAssociations" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmVsoVStorageObjectAssociationsVmDiskAssociation">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="vmId" type="xsd:string" />
+               <element name="diskKey" type="xsd:int" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmVsoVStorageObjectAssociationsVmDiskAssociation">
+      <sequence>
+         <element name="VslmVsoVStorageObjectAssociationsVmDiskAssociation" type="vslm:VslmVsoVStorageObjectAssociationsVmDiskAssociation" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmVsoVStorageObjectQueryResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="allRecordsReturned" type="xsd:boolean" />
+               <element name="id" type="vim25:ID" minOccurs="0" maxOccurs="unbounded" />
+               <element name="queryResults" type="vslm:VslmVsoVStorageObjectResult" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="VslmVsoVStorageObjectQuerySpec">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="queryField" type="xsd:string" />
+               <element name="queryOperator" type="xsd:string" />
+               <element name="queryValue" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmVsoVStorageObjectQuerySpec">
+      <sequence>
+         <element name="VslmVsoVStorageObjectQuerySpec" type="vslm:VslmVsoVStorageObjectQuerySpec" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <simpleType name="VslmVsoVStorageObjectQuerySpecQueryOperatorEnum">
+      <restriction base="xsd:string">
+         <enumeration value="equals" />
+         <enumeration value="notEquals" />
+         <enumeration value="lessThan" />
+         <enumeration value="greaterThan" />
+         <enumeration value="lessThanOrEqual" />
+         <enumeration value="greaterThanOrEqual" />
+         <enumeration value="contains" />
+         <enumeration value="startsWith" />
+         <enumeration value="endsWith" />
+      </restriction>
+   </simpleType>
+   <simpleType name="VslmVsoVStorageObjectQuerySpecQueryFieldEnum">
+      <restriction base="xsd:string">
+         <enumeration value="id" />
+         <enumeration value="name" />
+         <enumeration value="capacity" />
+         <enumeration value="createTime" />
+         <enumeration value="backingObjectId" />
+         <enumeration value="datastoreMoId" />
+         <enumeration value="metadataKey" />
+         <enumeration value="metadataValue" />
+      </restriction>
+   </simpleType>
+   <complexType name="VslmVsoVStorageObjectResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="id" type="vim25:ID" />
+               <element name="name" type="xsd:string" minOccurs="0" />
+               <element name="capacityInMB" type="xsd:long" />
+               <element name="createTime" type="xsd:dateTime" minOccurs="0" />
+               <element name="datastoreUrl" type="xsd:string" minOccurs="0" />
+               <element name="diskPath" type="xsd:string" minOccurs="0" />
+               <element name="usedCapacityInMB" type="xsd:long" minOccurs="0" />
+               <element name="backingObjectId" type="vim25:ID" minOccurs="0" />
+               <element name="snapshotInfo" type="vslm:VslmVsoVStorageObjectSnapshotResult" minOccurs="0" maxOccurs="unbounded" />
+               <element name="metadata" type="vim25:KeyValue" minOccurs="0" maxOccurs="unbounded" />
+               <element name="error" type="vim25:LocalizedMethodFault" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmVsoVStorageObjectResult">
+      <sequence>
+         <element name="VslmVsoVStorageObjectResult" type="vslm:VslmVsoVStorageObjectResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmVsoVStorageObjectSnapshotResult">
+      <complexContent>
+         <extension base="vim25:DynamicData">
+            <sequence>
+               <element name="backingObjectId" type="vim25:ID" />
+               <element name="description" type="xsd:string" minOccurs="0" />
+               <element name="snapshotId" type="vim25:ID" minOccurs="0" />
+               <element name="diskPath" type="xsd:string" minOccurs="0" />
+            </sequence>
+         </extension>
+      </complexContent>
+   </complexType>
+   <complexType name="ArrayOfVslmVsoVStorageObjectSnapshotResult">
+      <sequence>
+         <element name="VslmVsoVStorageObjectSnapshotResult" type="vslm:VslmVsoVStorageObjectSnapshotResult" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+</schema>

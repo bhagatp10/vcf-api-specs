@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright (c) 2024
+    Broadcom. All Rights Reserved.
+    The term "Broadcom" refers to Broadcom Inc.
+    and/or its subsidiaries.
+-->
+<definitions targetNamespace="urn:vsan"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:vsan="urn:vsan"
+>
+   <import location="vsan.wsdl" namespace="urn:vsan" />
+   <service name="VsanhealthService">
+      <port binding="vsan:VsanhealthBinding" name="VsanhealthPort">
+         <soap:address location="https://localhost/vsanHealth" />
+      </port>
+   </service>
+</definitions>
