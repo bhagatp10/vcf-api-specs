@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<schema
+   targetNamespace="urn:vslm"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:vslm="urn:vslm"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns:vim25="urn:vim25"
+   xmlns:reflect="urn:reflect"
+   elementFormDefault="qualified"
+>
+   <import namespace="urn:vim25" schemaLocation="core-types.xsd" />
+   <import namespace="urn:reflect" schemaLocation="reflect-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="query-types.xsd" />
+   <import namespace="urn:vim25" schemaLocation="vim-types.xsd" />
+   <include schemaLocation="vslm-types.xsd" />
+   <complexType name="RetrieveContentRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmSyncDatastoreRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastoreUrl" type="xsd:string" />
+         <element name="fullSync" type="xsd:boolean" />
+         <element name="fcdId" type="vim25:ID" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryDatastoreInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastoreUrl" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryTaskResultRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmCancelTaskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmLoginByTokenRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="delegatedTokenXml" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmLogoutRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmCreateDiskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="spec" type="vim25:VslmCreateSpec" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRegisterDiskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="path" type="xsd:string" />
+         <element name="name" type="xsd:string" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmExtendDiskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="newCapacityInMB" type="xsd:long" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmInflateDiskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRenameVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="name" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmUpdateVstorageObjectPolicyRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="profile" type="vim25:VirtualMachineProfileSpec" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmUpdateVstorageObjectCryptoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="profile" type="vim25:VirtualMachineProfileSpec" minOccurs="0" maxOccurs="unbounded" />
+         <element name="disksCrypto" type="vim25:DiskCryptoSpec" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmUpdateVStorageInfrastructureObjectPolicyRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="spec" type="vim25:vslmInfrastructureObjectPolicySpec" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageInfrastructureObjectPolicyRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmDeleteVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectStateRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectAssociationsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="ids" type="vim25:ID" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmListVStorageObjectForSpecRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="query" type="vslm:VslmVsoVStorageObjectQuerySpec" minOccurs="0" maxOccurs="unbounded" />
+         <element name="maxResult" type="xsd:int" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmCloneVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="spec" type="vim25:VslmCloneSpec" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRelocateVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="spec" type="vim25:VslmRelocateSpec" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmSetVStorageObjectControlFlagsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="controlFlags" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmClearVStorageObjectControlFlagsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="controlFlags" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmAttachTagToVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="category" type="xsd:string" />
+         <element name="tag" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmDetachTagFromVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="category" type="xsd:string" />
+         <element name="tag" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmListVStorageObjectsAttachedToTagRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="category" type="xsd:string" />
+         <element name="tag" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmListTagsAttachedToVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmReconcileDatastoreInventoryRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmScheduleReconcileDatastoreInventoryRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastore" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmCreateSnapshotRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="description" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmDeleteSnapshotRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveSnapshotInfoRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmCreateDiskFromSnapshotRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" />
+         <element name="name" type="xsd:string" />
+         <element name="profile" type="vim25:VirtualMachineProfileSpec" minOccurs="0" maxOccurs="unbounded" />
+         <element name="crypto" type="vim25:CryptoSpec" minOccurs="0" />
+         <element name="path" type="xsd:string" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRevertVStorageObjectRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveSnapshotDetailsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryChangedDiskAreasRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" />
+         <element name="startOffset" type="xsd:long" />
+         <element name="changeId" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryGlobalCatalogSyncStatusRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmQueryGlobalCatalogSyncStatusForDatastoreRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="datastoreURL" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmUpdateVStorageObjectMetadataRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="metadata" type="vim25:KeyValue" minOccurs="0" maxOccurs="unbounded" />
+         <element name="deleteKeys" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectMetadataRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" minOccurs="0" />
+         <element name="prefix" type="xsd:string" minOccurs="0" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectMetadataValueRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="snapshotId" type="vim25:ID" minOccurs="0" />
+         <element name="key" type="xsd:string" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmRetrieveVStorageObjectsRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="ids" type="vim25:ID" minOccurs="0" maxOccurs="unbounded" />
+      </sequence>
+   </complexType>
+   <complexType name="VslmAttachDiskRequestType">
+      <sequence>
+         <element name="_this" type="vim25:ManagedObjectReference" />
+         <element name="id" type="vim25:ID" />
+         <element name="vm" type="vim25:ManagedObjectReference" />
+         <element name="controllerKey" type="xsd:int" minOccurs="0" />
+         <element name="unitNumber" type="xsd:int" minOccurs="0" />
+      </sequence>
+   </complexType>
+</schema>

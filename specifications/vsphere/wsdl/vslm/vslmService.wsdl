@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+   	Copyright (c) 2005-2025
+	Broadcom. All Rights Reserved.
+	The term "Broadcom" refers to Broadcom Inc.
+	and/or its subsidiaries.
+-->
+<definitions targetNamespace="urn:vslmService"
+   xmlns="http://schemas.xmlsoap.org/wsdl/"
+   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+   xmlns:interface="urn:vslm"
+>
+   <import location="vslm.wsdl" namespace="urn:vslm" />
+   <service name="VslmService">
+      <port binding="interface:VslmBinding" name="VslmPort">
+         <soap:address location="https://localhost/vslm/sdk" />
+      </port>
+   </service>
+</definitions>
